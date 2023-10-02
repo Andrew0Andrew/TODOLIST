@@ -12,7 +12,7 @@ function App() {
         title,
         priority,
       };
-      setList((prev)=>{return [...prev, newTodo]})
+      setList((prev)=>[...prev, newTodo].sort((a, b) => a.priority - b.priority));
       console.log(title,priority)
       setTitle('')
       setPriority('')
@@ -22,17 +22,6 @@ function App() {
     }
   }
 
-  useEffect(()=>{
-    let tmp;
-    list.forEach((i)=>{
-      if(list[i].priority>list[list.length-1].priority){
-        tmp = list[i].priority;
-        list[i].priority = list[list.length-1].priority;
-        list[list.length-1].priority = tmp
-      }
-      setList(()=>list)
-      })
-    },[])
 
   return (
     <div className='todo_list'>
