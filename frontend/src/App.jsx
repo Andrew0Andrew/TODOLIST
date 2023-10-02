@@ -25,10 +25,10 @@ function App() {
 
   return (
     <div className='todo_list'>
-      <h1>TODO</h1>
+      <h1>TODO LIST</h1>
       <div className='todoform'>
           <input type="text" placeholder='what should we do today?' className='input_task' value={title} onChange={e => setTitle(e.target.value)}/>
-          <input type='number' className='input_priority' min={'1'} value={priority} onChange={e => setPriority(e.target.value)}></input>
+          <input type='number' className='input_priority' min={'1'} value={priority} placeholder='priority?' onChange={e => setPriority(e.target.value)}></input>
           <button className='add_task_btn' onClick={handleSubmit}>add task</button>
       </div>
 
@@ -36,8 +36,9 @@ function App() {
         {
           list.map((e)=>{
             return(
-              <div>
-                <h1>{e.priority} {e.title}</h1>
+              <div className='todo_task'>
+                <h1 className='todo_task_priority'>Priority: {e.priority}</h1>
+                <h2 className='todo_task_text'>{e.title}</h2>
               </div>
             ) 
           })
