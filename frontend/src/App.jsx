@@ -6,13 +6,13 @@ function App() {
   const [priority,setPriority]=useState('')
   const [list, setList]=useState([])
   const [checked,setChecked]=useState(false)
-  const [record,setRecord]=useState(list)
 
   const handleSubmit = () => {
     if(title !== '' && priority !== '' && priority > 0){
       const newTodo = {
         title,
         priority,
+        id: Math.random(),
       };
       setList((prev)=>[...prev, newTodo].sort((a, b) => a.priority - b.priority));
       console.log(list)
@@ -25,12 +25,6 @@ function App() {
     }
   }
 
-  const handleDelete = () => {
-    setRecord(
-      list.title = null,
-      list.priority = null,
-    )
-  }
 
   return (
     <div className='todo_list'>
@@ -45,11 +39,11 @@ function App() {
         {
           list.map((e)=>{
             return(
-              <div className='todo_task' checked={checked} onChange={()=>setChecked(!checked)}>
-                <input type="checkbox"/>
+              <div className='todo_task'>
+                <input type="checkbox" id={e.id} checked={checked} onChange={()=>setChecked(!checked)} />
                 <h1 className='todo_task_priority' style={checked?{textDecoration:'line-through'}:null}>Priority: {e.priority}</h1>
                 <h2 className='todo_task_text' style={checked?{textDecoration:'line-through'}:null}>{e.title}</h2>
-                <button onClick={handleDelete}>Delete</button>
+                <button>Delete</button>
               </div>
             )
           })
