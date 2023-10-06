@@ -6,13 +6,13 @@ function App() {
   const [priority,setPriority]=useState('')
   const [list, setList]=useState([])
   const [checked,setChecked]=useState([])
+  const [isVisible, setIsVisible] = useState(true)
 
   const handleSubmit = () => {
     if(title !== '' && priority !== '' && priority > 0){
       const newTodo = {
         title,
         priority,
-        id: Math.random(),
       };
       setList((prev)=>[...prev, newTodo].sort((a, b) => a.priority - b.priority));
       console.log(list)
