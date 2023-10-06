@@ -5,7 +5,7 @@ function App() {
   const [title, setTitle]=useState('')
   const [priority,setPriority]=useState('')
   const [list, setList]=useState([])
-  const [checked,setChecked]=useState(false)
+  const [checked,setChecked]=useState([])
 
   const handleSubmit = () => {
     if(title !== '' && priority !== '' && priority > 0){
@@ -25,6 +25,11 @@ function App() {
     }
   }
 
+  const handleLineThrough = (id) => {
+    let newArray = [...checked];
+    newArray[id] = !newArray[id];
+    setChecked(newArray);
+  }
 
   return (
     <div className='todo_list'>
@@ -37,12 +42,12 @@ function App() {
 
       <div>
         {
-          list.map((e)=>{
+          list.map((e, i)=>{
             return(
               <div className='todo_task'>
-                <input type="checkbox" id={e.id} checked={checked} onChange={()=>setChecked(!checked)} />
-                <h1 className='todo_task_priority' style={checked?{textDecoration:'line-through'}:null}>Priority: {e.priority}</h1>
-                <h2 className='todo_task_text' style={checked?{textDecoration:'line-through'}:null}>{e.title}</h2>
+                <input type="checkbox" id={e.id} checked={checked[i]} onChange={()=>{handleLineThrough(i)}} />
+                <h1 className='todo_task_priority' style={checked[i]?{textDecoration:'line-through'}:null}>Priority: {e.priority}</h1>
+                <h2 className='todo_task_text' style={checked[i]?{textDecoration:'line-through'}:null}>{e.title}</h2>
                 <button>Delete</button>
               </div>
             )
