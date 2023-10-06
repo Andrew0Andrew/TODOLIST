@@ -31,6 +31,12 @@ function App() {
     setChecked(newArray);
   }
 
+  const handleDeleteTask = (index) => {
+    let newList = [...list];
+    newList[index]=null;
+    setList(newList);
+  }
+
   return (
     <div className='todo_list'>
       <h1>TODO LIST</h1>
@@ -43,13 +49,18 @@ function App() {
       <div>
         {
           list.map((e, i)=>{
-            return(
+
+            return e !== null ? (
               <div className='todo_task'>
                 <input type="checkbox" id={e.id} checked={checked[i]} onChange={()=>{handleLineThrough(i)}} />
                 <h1 className='todo_task_priority' style={checked[i]?{textDecoration:'line-through'}:null}>Priority: {e.priority}</h1>
                 <h2 className='todo_task_text' style={checked[i]?{textDecoration:'line-through'}:null}>{e.title}</h2>
-                <button>Delete</button>
+                <button onClick={()=>handleDeleteTask(i)}>Delete</button>
               </div>
+            )
+            : 
+            (
+              <></>
             )
           })
         }
