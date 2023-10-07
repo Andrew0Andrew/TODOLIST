@@ -48,26 +48,6 @@ function App() {
       </div>
 
       <div>
-<<<<<<< HEAD
-        {
-          list.map((e, i)=>{
-
-            return e !== null ? (
-              <div className='todo_task'>
-                <input type="checkbox" className='checkbox_btn' checked={checked[i]} onChange={()=>{handleLineThrough(i)}}/>
-                <h1 className='todo_task_priority' style={checked[i]?{textDecoration:'line-through'}:null}>Priority: {e.priority}</h1>
-                <h2 className='todo_task_text' style={checked[i]?{textDecoration:'line-through'}:null}>{e.title}</h2>
-                <button className='delete' onClick={()=>handleDeleteTask(i)}>Delete</button>
-              </div>
-            )
-            :
-            (
-              <></>
-            )
-          })
-        }
-      </div>
-=======
         {list.map((el, i) => {
           return el !== null ? (
             <DraggableTask
