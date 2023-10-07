@@ -1,6 +1,8 @@
 import {useState } from 'react'
 import './App.css'
-
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DraggableTask } from './DragableTask';
 function App() {
   const [title, setTitle]=useState('')
   const [priority,setPriority]=useState('')
@@ -34,7 +36,6 @@ function App() {
     const indexOfTaskToDelete = newList.indexOf(list[index]);
     newList.splice(indexOfTaskToDelete, 1);
     setList(newList);
-    console.log(newList);
   };
   
   return (
@@ -47,27 +48,34 @@ function App() {
       </div>
 
       <div>
-        {
-          list.map((e, i)=>{
-
-            return e !== null ? (
-              <div className='todo_task'>
-                <input type="checkbox" className='checkbox_btn' checked={e.checked} onChange={()=>{handleLineThrough(i)}}/>
-                <h1 className='todo_task_priority' style={e.checked?{textDecoration:'line-through'}:null}>Priority: {e.priority}</h1>
-                <h2 className='todo_task_text' style={e.checked?{textDecoration:'line-through'}:null}>{e.title}</h2>
-                <button className='delete' onClick={()=>handleDeleteTask(i)}>Delete</button>
-              </div>
-              
-            )
-            :
-            (
-              <></>
-            )
-          })
-        }
-      </div>
+        {list.map((el, i) => {
+          return el !== null ? (
+            <DraggableTask
+              key={i}
+              task={el}
+              index={i}
+              moveTask={(fromIndex, toIndex) => {
+                const newList = [...list];
+                const [movedTask] = newList.splice(fromIndex, 1);
+                newList.splice(toIndex, 0, movedTask);
+                setList(newList);
+              }}
+              handleLineThrough={handleLineThrough}
+              handleDeleteTask={handleDeleteTask}
+            />
+          ) : (
+            <></>
+          );
+        })}
+      </div>    
     </div>
   )
 }
 
-export default App
+export default function WrappedApp() {
+  return (
+    <DndProvider backend={HTML5Backend}>
+      <App />
+    </DndProvider>
+  );
+}
