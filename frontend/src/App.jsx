@@ -6,7 +6,6 @@ function App() {
   const [priority,setPriority]=useState('')
   const [list, setList]=useState([])
   const [checked,setChecked]=useState([])
-  const [isVisible, setIsVisible] = useState(true)
 
   const handleSubmit = () => {
     if(title !== '' && priority !== '' && priority > 0){
@@ -29,14 +28,18 @@ function App() {
     let newArray = [...checked];
     newArray[id] = !newArray[id];
     setChecked(newArray);
+    console.log(newArray)
   }
 
   const handleDeleteTask = (index) => {
     let newList = [...list];
-    newList[index]=null;
+    newList = newList.filter((e) => e !== null);
+    const indexOfTaskToDelete = newList.indexOf(list[index]);
+    newList.splice(indexOfTaskToDelete, 1);
     setList(newList);
-  }
-
+    console.log(newList);
+  };
+  
   return (
     <div className='todo_list'>
       <h1>TODO LIST</h1>
@@ -52,13 +55,14 @@ function App() {
 
             return e !== null ? (
               <div className='todo_task'>
-                <input type="checkbox" id={e.id} checked={checked[i]} onChange={()=>{handleLineThrough(i)}} />
+                <input type="checkbox" className='checkbox_btn' checked={checked[i]} onChange={()=>{handleLineThrough(i)}}/>
                 <h1 className='todo_task_priority' style={checked[i]?{textDecoration:'line-through'}:null}>Priority: {e.priority}</h1>
                 <h2 className='todo_task_text' style={checked[i]?{textDecoration:'line-through'}:null}>{e.title}</h2>
-                <button onClick={()=>handleDeleteTask(i)}>Delete</button>
+                <button className='delete' onClick={()=>handleDeleteTask(i)}>Delete</button>
               </div>
+              
             )
-            : 
+            :
             (
               <></>
             )

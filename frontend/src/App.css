@@ -63,3 +63,12 @@ h1{
     text-align: center;
     margin-top: 10px;
 }
+
+.delete {
+    background-color: rgb(18, 201, 18);
+    border-radius: 5%;
+    border-style: none;
+    color: white;
+    margin-bottom: 2%;
+    padding: 1%;
+}
