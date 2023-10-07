@@ -1,21 +1,21 @@
 import {useState } from 'react'
 import './App.css'
-
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DraggableTask } from './DragableTask';
 function App() {
   const [title, setTitle]=useState('')
   const [priority,setPriority]=useState('')
   const [list, setList]=useState([])
-  const [checked,setChecked]=useState([])
 
   const handleSubmit = () => {
     if(title !== '' && priority !== '' && priority > 0){
       const newTodo = {
         title,
         priority,
+        checked: false,
       };
       setList((prev)=>[...prev, newTodo].sort((a, b) => a.priority - b.priority));
-      console.log(list)
-      console.log(title,priority)
       setTitle('')
       setPriority('')
     } else {
@@ -25,10 +25,9 @@ function App() {
   }
 
   const handleLineThrough = (id) => {
-    let newArray = [...checked];
-    newArray[id] = !newArray[id];
-    setChecked(newArray);
-    console.log(newArray)
+    let newList = [...list];
+    newList[id].checked = !newList[id].checked;
+    setList(newList);
   }
 
   const handleDeleteTask = (index) => {
@@ -37,7 +36,6 @@ function App() {
     const indexOfTaskToDelete = newList.indexOf(list[index]);
     newList.splice(indexOfTaskToDelete, 1);
     setList(newList);
-    console.log(newList);
   };
   
   return (
@@ -50,6 +48,7 @@ function App() {
       </div>
 
       <div>
+<<<<<<< HEAD
         {
           list.map((e, i)=>{
 
@@ -68,8 +67,36 @@ function App() {
           })
         }
       </div>
+=======
+        {list.map((el, i) => {
+          return el !== null ? (
+            <DraggableTask
+              key={i}
+              task={el}
+              index={i}
+              moveTask={(fromIndex, toIndex) => {
+                const newList = [...list];
+                const [movedTask] = newList.splice(fromIndex, 1);
+                newList.splice(toIndex, 0, movedTask);
+                setList(newList);
+              }}
+              handleLineThrough={handleLineThrough}
+              handleDeleteTask={handleDeleteTask}
+            />
+          ) : (
+            <></>
+          );
+        })}
+      </div>    
+>>>>>>> 6bb0aed3cbe41f390830c300e2365fab8db744a2
     </div>
   )
 }
 
-export default App
+export default function WrappedApp() {
+  return (
+    <DndProvider backend={HTML5Backend}>
+      <App />
+    </DndProvider>
+  );
+}
