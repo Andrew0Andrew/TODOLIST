@@ -60,7 +60,6 @@ function App() {
                 <h2 className='todo_task_text' style={checked[i]?{textDecoration:'line-through'}:null}>{e.title}</h2>
                 <button className='delete' onClick={()=>handleDeleteTask(i)}>Delete</button>
               </div>
-              
             )
             :
             (
