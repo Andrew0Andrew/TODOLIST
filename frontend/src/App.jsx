@@ -68,7 +68,6 @@ function App() {
           );
         })}
       </div>    
->>>>>>> 6bb0aed3cbe41f390830c300e2365fab8db744a2
     </div>
   )
 }
